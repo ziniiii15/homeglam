@@ -48,3 +48,4 @@ class PaymentController extends Controller
         return redirect()->route('client.dashboard')->with('error', 'Payment was canceled.');
     }
 }
+

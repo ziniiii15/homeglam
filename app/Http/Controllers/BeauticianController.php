@@ -34,11 +34,17 @@ class BeauticianController extends Controller
         $beautician = Auth::guard('beautician')->user();
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('galleries', 'public');
+            $directory = base_path('storage/galleries');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($directory, $filename);
 
             Gallery::create([
                 'beautician_id' => $beautician->id,
-                'image_url' => 'storage/' . $path, // Store relative path suitable for asset()
+                'image_url' => 'view-asset/galleries/' . $filename, // Store relative path suitable for asset()
                 'description' => $request->description,
             ]);
 
@@ -56,7 +62,7 @@ class BeauticianController extends Controller
         }
 
         // Delete file from storage (optional but good practice)
-        $path = str_replace('storage/', '', $gallery->image_url);
+        $path = str_replace('view-asset/', '', $gallery->image_url);
         \Illuminate\Support\Facades\Storage::disk('public')->delete($path);
 
         $gallery->delete();
@@ -153,7 +159,7 @@ class BeauticianController extends Controller
                 $subscriptionExpired = true;
             }
 
-            $directory = public_path('uploads/subscription_proofs');
+            $directory = base_path('storage/uploads/subscription_proofs');
             $pattern = $directory . DIRECTORY_SEPARATOR . 'beautician_' . $beautician->id . '.*';
             $files = glob($pattern);
             if ($files && count($files) > 0) {
@@ -248,7 +254,7 @@ class BeauticianController extends Controller
         $beautician = Auth::guard('beautician')->user();
 
         if ($beautician && $request->hasFile('subscription_proof')) {
-            $directory = public_path('uploads/subscription_proofs');
+            $directory = base_path('storage/uploads/subscription_proofs');
 
             if (!is_dir($directory)) {
                 mkdir($directory, 0755, true);
@@ -538,17 +544,25 @@ class BeauticianController extends Controller
         }
 
         if ($request->hasFile('photo')) {
+            $directory = base_path('storage/uploads/beauticians');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
             $file = $request->file('photo');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/beauticians'), $filename);
-            $beautician->photo_url = '/uploads/beauticians/' . $filename;
+            $file->move($directory, $filename);
+            $beautician->photo_url = 'view-upload/beauticians/' . $filename;
         }
 
         if ($request->hasFile('qr_code')) {
+            $directory = base_path('storage/uploads/beauticians/qr');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
             $file = $request->file('qr_code');
             $filename = 'qr_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/beauticians/qr'), $filename);
-            $beautician->qr_code_path = '/uploads/beauticians/qr/' . $filename;
+            $file->move($directory, $filename);
+            $beautician->qr_code_path = 'view-upload/beauticians/qr/' . $filename;
         }
 
         $beautician->save();
@@ -796,3 +810,4 @@ public function storeTimeSlot(Request $request)
     }
 
 }
+

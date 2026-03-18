@@ -3,3 +3,4 @@
     <!-- Your input fields: name, email, phone, etc. -->
     <button type="submit">Register</button>
 </form>
+

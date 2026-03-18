@@ -251,7 +251,7 @@
                 <div class="card h-100 border-0 shadow-sm admin-sidebar">
                     <div class="card-body admin-sidebar-inner">
                         <div class="d-flex align-items-center mb-3">
-                            <img src="{{ asset('images/logo.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
+                            <img src="{{ asset('view-asset/photo_2026-02-04_22-17-58.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
                             <span class="fw-bold text-dark" style="letter-spacing: -0.3px; font-size: 1.1rem;">HomeGlam | Admin</span>
                         </div>
                         <h6 class="text-uppercase text-muted small mb-3">Navigation</h6>
@@ -378,15 +378,15 @@
                         <tbody>
                             @foreach($pendingVerifications as $b)
                             @php
-                                $subscriptionProofPattern = public_path('uploads/subscription_proofs/beautician_' . $b->id . '.*');
+                                $subscriptionProofPattern = base_path('storage/uploads/subscription_proofs/beautician_' . $b->id . '.*');
                                 $subscriptionProofFiles = glob($subscriptionProofPattern);
                                 $hasSubscriptionProof = $subscriptionProofFiles && count($subscriptionProofFiles) > 0;
                                 $subscriptionProofUrl = null;
                                 if ($hasSubscriptionProof) {
                                     $first = $subscriptionProofFiles[0];
-                                    $relative = str_replace(public_path(), '', $first);
+                                    $relative = str_replace(base_path('storage/uploads'), '', $first);
                                     $relative = ltrim($relative, '\\/');
-                                    $subscriptionProofUrl = asset($relative);
+                                    $subscriptionProofUrl = asset('view-upload/' . $relative);
                                 }
                                 $verificationDocumentUrl = $b->verification_document ? asset($b->verification_document) : null;
                             @endphp
@@ -561,8 +561,8 @@
                         <h6 class="fw-bold text-dark mb-3">Subscription QR</h6>
                         @php
                             $subscriptionQrPath = null;
-                            if (file_exists(public_path('uploads/admin/subscription_qr.png'))) {
-                                $subscriptionQrPath = asset('uploads/admin/subscription_qr.png');
+                            if (file_exists(base_path('storage/uploads/admin/subscription_qr.png'))) {
+                                $subscriptionQrPath = asset('view-upload/admin/subscription_qr.png');
                             }
                         @endphp
 
@@ -981,3 +981,4 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endsection
+

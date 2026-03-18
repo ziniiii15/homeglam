@@ -308,3 +308,4 @@ class ClientAuthController extends Controller
         return app('redirect')->route('welcome');
     }
 }
+

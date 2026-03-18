@@ -62,3 +62,4 @@ class DiscountController extends Controller
         return redirect()->route('discounts.index')->with('success','Discount deleted successfully.');
     }
 }
+

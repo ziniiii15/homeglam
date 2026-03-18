@@ -124,7 +124,7 @@
                                 </td>
                                 <td>
                                     @if($report->proof_image)
-                                        <a href="{{ asset('storage/' . $report->proof_image) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">View Image</a>
+                                        <a href="{{ asset('view-asset/' . $report->proof_image) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">View Image</a>
                                     @else
                                         <span class="text-muted small">No Image</span>
                                     @endif
@@ -219,3 +219,4 @@
     }
 </script>
 @endsection
+

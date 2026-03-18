@@ -12,3 +12,4 @@
     <button type="submit">Login</button>
 </form>
 <a href="{{ route('beautician.register') }}">Register</a>
+

@@ -46,9 +46,13 @@ class ClientController extends Controller
         $data['password'] = bcrypt($request->password);
 
         if ($request->hasFile('photo')) {
+            $directory = base_path('storage/uploads/clients');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
             $filename = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('uploads/clients'), $filename);
-            $data['photo_url'] = 'uploads/clients/' . $filename;
+            $request->photo->move($directory, $filename);
+            $data['photo_url'] = 'view-upload/clients/' . $filename;
         }
 
         Client::create($data);
@@ -83,9 +87,13 @@ class ClientController extends Controller
         $client->address = $request->address;
 
         if ($request->hasFile('photo')) {
+            $directory = base_path('storage/uploads/clients');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
             $filename = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('uploads/clients'), $filename);
-            $client->photo_url = 'uploads/clients/' . $filename;
+            $request->photo->move($directory, $filename);
+            $client->photo_url = 'view-upload/clients/' . $filename;
         }
 
         $client->save();
@@ -320,10 +328,10 @@ class ClientController extends Controller
         if ($request->hasFile('payment_receipt')) {
             $file = $request->file('payment_receipt');
             $filename = 'receipt_' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/bookings/receipts'), $filename);
+            $file->move(base_path('storage/uploads/bookings/receipts'), $filename);
             
             $booking->update([
-                'payment_receipt_path' => '/uploads/bookings/receipts/' . $filename,
+                'payment_receipt_path' => 'view-upload/bookings/receipts/' . $filename,
                 'payment_status' => 'pending_verification' // Or keep 'pending'
             ]);
 
@@ -685,8 +693,8 @@ public function updateProfile(Request $request)
     // Update photo if uploaded
     if ($request->hasFile('photo')) {
         $filename = time() . '.' . $request->photo->extension();
-        $request->photo->move(public_path('uploads/clients'), $filename);
-        $client->photo_url = 'uploads/clients/' . $filename;
+        $request->photo->move(base_path('storage/uploads/clients'), $filename);
+        $client->photo_url = 'view-upload/clients/' . $filename;
     }
 
     // Update fields
@@ -729,3 +737,4 @@ public function updateLocation(Request $request)
     return response()->json(['success' => true, 'message' => 'Location updated successfully']);
 }
 }
+

@@ -110,7 +110,7 @@
         border-radius: 30px;
         box-shadow: 0 20px 40px rgba(214, 51, 132, 0.15);
         /* Use the existing bg1.png if suitable, or a placeholder */
-        background: url('{{ asset("bg1.png") }}') center center/cover no-repeat;
+        background: url('{{ asset("view-asset/bg1.png") }}') center center/cover no-repeat;
     }
     /* Floating Elements */
     .floating-card {
@@ -423,3 +423,4 @@
     </div>
 </footer>
 @endsection
+

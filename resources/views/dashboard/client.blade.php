@@ -355,7 +355,7 @@ body {
         left: 0;
         width: 100%;
         height: 100%;
-        background: url('{{ asset("bg1.png") }}') no-repeat center center fixed;
+        background: url('{{ asset("view-asset/bg1.png") }}') no-repeat center center fixed;
         background-size: cover;
         z-index: -2;
         transition: filter 0.3s ease;
@@ -751,7 +751,7 @@ body {
     <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="d-flex align-items-center mb-3">
-            <img src="{{ asset('images/logo.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
+            <img src="{{ asset('view-asset/photo_2026-02-04_22-17-58.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
             <span class="fw-bold" style="letter-spacing: -0.3px; font-size: 1.1rem;">HomeGlam</span>
         </div>
         <img src="{{ $client->photo_url ? asset($client->photo_url) : 'https://via.placeholder.com/150' }}" alt="Profile">
@@ -836,15 +836,15 @@ body {
                 $colors = ['purple', 'teal', 'orange', 'blue', 'pink'];
                 // Map categories to their GIF icons
                 $categoryGifs = [
-                    'Hair' => 'hair.gif',
-                    'Hair Services' => 'hair.gif',
-                    'Nails' => 'nails.gif',
-                    'Nail Services' => 'nails.gif',
-                    'Makeup' => 'makeup.gif',
-                    'Makeup Services' => 'makeup.gif',
-                    'Massage' => 'massage.gif',
-                    'Skincare' => 'skincare.gif',
-                    'Skin Care' => 'skincare.gif',
+                    'Hair' => 'view-asset/hair.gif',
+                    'Hair Services' => 'view-asset/hair.gif',
+                    'Nails' => 'view-asset/nails (2).gif',
+                    'Nail Services' => 'view-asset/nails (2).gif',
+                    'Makeup' => 'view-asset/makeup.gif',
+                    'Makeup Services' => 'view-asset/makeup.gif',
+                    'Massage' => 'view-asset/massage.gif',
+                    'Skincare' => 'view-asset/skincare.gif',
+                    'Skin Care' => 'view-asset/skincare.gif',
                 ];
             @endphp
             @foreach($categories as $index => $category)
@@ -2046,7 +2046,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                         // Replace content
                         const imageHtml = data.review.image_url 
-                            ? `<div class="mt-2"><img src="/${data.review.image_url}" alt="Review Image" class="img-fluid rounded-3" style="max-height: 150px; object-fit: cover;"></div>` 
+                            ? `<div class="mt-2"><img src="${data.review.image_url.startsWith('http') ? data.review.image_url : window.location.origin + '/' + data.review.image_url}" alt="Review Image" class="img-fluid rounded-3" style="max-height: 150px; object-fit: cover;"></div>` 
                             : '';
 
                         reviewSection.innerHTML = `
@@ -2254,7 +2254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const gallery = Array.isArray(b.gallery) ? b.gallery : [];
         const firstImage = gallery.length > 0 
-            ? (gallery[0].image_url.startsWith('http') ? gallery[0].image_url : window.location.origin + gallery[0].image_url) 
+            ? (gallery[0].image_url.startsWith('http') ? gallery[0].image_url : window.location.origin + '/' + gallery[0].image_url) 
             : null;
 
         return `
@@ -2263,7 +2263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Left: Beautician Info (Clickable) -->
                     <div class="d-flex align-items-center gap-3 flex-grow-1 beautician-trigger" style="cursor: pointer;" data-id="${b.id}">
                         <div class="position-relative beautician-profile-trigger" data-id="${b.id}" style="transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                            <img src="${b.photo_url ? (b.photo_url.startsWith('http') ? b.photo_url : window.location.origin + b.photo_url) : 'https://via.placeholder.com/80'}" 
+                            <img src="${b.photo_url ? (b.photo_url.startsWith('http') ? b.photo_url : window.location.origin + '/' + b.photo_url) : 'https://via.placeholder.com/80'}" 
                                  alt="${b.name}" 
                                  class="rounded-circle border shadow-sm"
                                  style="width: 60px; height: 60px; object-fit: cover;">
@@ -2295,23 +2295,23 @@ document.addEventListener('DOMContentLoaded', () => {
                             <small class="fw-bold text-muted" style="font-size: 0.65rem;">REVIEWS</small>
                         </button>
 
-                        ${firstImage ? `
                         <div class="portfolio-preview-btn position-relative shadow-sm" 
-                             style="width: 70px; height: 70px; border-radius: 12px; overflow: hidden; cursor: pointer; border: 1px solid var(--border-color);"
+                             style="width: 70px; height: 70px; border-radius: 12px; overflow: hidden; cursor: pointer; border: 1px solid var(--border-color); background: #f8f9fa;"
                              data-id="${b.id}"
                              title="View Portfolio">
-                            <img src="${firstImage}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
-                                 style="background: rgba(0,0,0,0.3); transition: 0.2s;">
-                                <i class="bi bi-images text-white"></i>
-                            </div>
+                            ${firstImage ? `
+                                <img src="${firstImage}" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
+                                     style="background: rgba(0,0,0,0.3); transition: 0.2s;">
+                                    <i class="bi bi-images text-white"></i>
+                                </div>
+                            ` : `
+                                <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-muted">
+                                    <i class="bi bi-images mb-1" style="font-size: 1.2rem;"></i>
+                                    <small style="font-size: 0.6rem; font-weight: bold; text-transform: uppercase;">PORTFOLIO</small>
+                                </div>
+                            `}
                         </div>
-                        ` : `
-                        <div class="d-flex align-items-center justify-content-center bg-light text-muted border rounded-3" 
-                             style="width: 70px; height: 70px;">
-                            <i class="bi bi-image" style="font-size: 1.5rem; opacity: 0.5;"></i>
-                        </div>
-                        `}
                     </div>
                 </div>
 
@@ -2443,7 +2443,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('profileModalPhone').textContent = beautician.phone;
                 
                 // Image
-                const imgUrl = beautician.photo_url ? (beautician.photo_url.startsWith('http') ? beautician.photo_url : window.location.origin + beautician.photo_url) : 'https://via.placeholder.com/150';
+                const imgUrl = beautician.photo_url ? (beautician.photo_url.startsWith('http') ? beautician.photo_url : window.location.origin + '/' + beautician.photo_url) : 'https://via.placeholder.com/150';
                 document.getElementById('profileModalImage').src = imgUrl;
 
                 // Status Badge
@@ -2553,7 +2553,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <p class="mb-0 small fst-italic text-muted">"${r.comment}"</p>
                                 ${r.image_url ? `
                                 <div class="mt-2">
-                                    <img src="${r.image_url}" class="img-fluid rounded-3 border" style="max-height: 150px; object-fit: cover; cursor: pointer;" onclick="window.open(this.src, '_blank')">
+                                    <img src="${r.image_url.startsWith('http') ? r.image_url : window.location.origin + '/' + r.image_url}" class="img-fluid rounded-3 border" style="max-height: 150px; object-fit: cover; cursor: pointer;" onclick="window.open(this.src, '_blank')">
                                 </div>
                                 ` : ''}
                             </div>
@@ -2591,7 +2591,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="col-md-4 col-6">
                                 <div class="card border-0 shadow-sm h-100">
                                     <div style="height: 200px; overflow: hidden; border-radius: 12px 12px 0 0;">
-                                        <img src="${img.image_url}" class="w-100 h-100" style="object-fit: cover; cursor: pointer;" onclick="window.open(this.src, '_blank')">
+                                        <img src="${img.image_url.startsWith('http') ? img.image_url : window.location.origin + '/' + img.image_url}" class="w-100 h-100" style="object-fit: cover; cursor: pointer;" onclick="window.open(this.src, '_blank')">
                                     </div>
                                     ${img.description ? `<div class="card-body p-2 bg-light rounded-bottom"><small class="text-muted">${img.description}</small></div>` : ''}
                                 </div>
@@ -2682,7 +2682,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const noQrMsg = document.getElementById('noQrMessage');
         
         if (qrPath && qrPath !== 'null' && qrPath !== '') {
-            qrImage.src = qrPath;
+            qrImage.src = qrPath.startsWith('http') ? qrPath : window.location.origin + '/' + qrPath;
             qrImage.style.display = 'block'; // Will be hidden by parent d-none until Manual is selected
             noQrMsg.style.display = 'none';
         } else {
@@ -3491,3 +3491,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+

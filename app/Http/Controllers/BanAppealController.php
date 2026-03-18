@@ -32,3 +32,4 @@ class BanAppealController extends Controller
         return back()->with('success', 'Your appeal has been submitted successfully.');
     }
 }
+

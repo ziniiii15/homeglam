@@ -32,7 +32,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('{{ asset("bg1.png") }}') no-repeat center center;
+            background: url('{{ asset("view-asset/bg1.png") }}') no-repeat center center;
             background-size: cover;
             z-index: -2;
             transform: scale(1.05);
@@ -225,3 +225,4 @@
 
 </body>
 </html>
+

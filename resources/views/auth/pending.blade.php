@@ -3,8 +3,8 @@
 @section('content')
 @php
     $subscriptionQrPath = null;
-    if (file_exists(public_path('uploads/admin/subscription_qr.png'))) {
-        $subscriptionQrPath = asset('uploads/admin/subscription_qr.png');
+    if (file_exists(base_path('storage/uploads/admin/subscription_qr.png'))) {
+        $subscriptionQrPath = asset('view-upload/admin/subscription_qr.png');
     }
 
     $hasProof = false;
@@ -13,13 +13,13 @@
     $beautician = auth()->guard('beautician')->user();
     if ($beautician) {
         $beauticianId = $beautician->id;
-        $pattern = public_path('uploads/subscription_proofs/beautician_' . $beauticianId . '.*');
+        $pattern = base_path('storage/uploads/subscription_proofs/beautician_' . $beauticianId . '.*');
         $files = glob($pattern);
         if ($files && count($files) > 0) {
             $hasProof = true;
-            $relative = str_replace(public_path(), '', $files[0]);
+            $relative = str_replace(base_path('storage/uploads'), '', $files[0]);
             $relative = ltrim($relative, '\\/');
-            $proofUrl = asset($relative);
+            $proofUrl = asset('view-upload/' . $relative);
         }
     }
 
@@ -179,3 +179,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 @endif
 @endsection
+

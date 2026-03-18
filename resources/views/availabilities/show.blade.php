@@ -12,3 +12,4 @@
 <a href="{{ route('availabilities.index') }}" class="btn btn-secondary mt-3">Back</a>
 </div>
 @endsection
+

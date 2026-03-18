@@ -39,8 +39,14 @@ class ReviewController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('review_image')) {
-            $path = $request->file('review_image')->store('review_images', 'public');
-            $data['image_url'] = 'storage/' . $path;
+            $directory = base_path('storage/review_images');
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
+            $file = $request->file('review_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move($directory, $filename);
+            $data['image_url'] = 'view-asset/review_images/' . $filename;
         }
 
         $review = Review::create($data);
@@ -90,3 +96,4 @@ class ReviewController extends Controller
         return redirect()->route('reviews.index')->with('success','Review deleted successfully.');
     }
 }
+

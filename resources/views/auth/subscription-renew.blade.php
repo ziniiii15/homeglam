@@ -3,8 +3,8 @@
 @section('content')
 @php
     $subscriptionQrPath = null;
-    if (file_exists(public_path('uploads/admin/subscription_qr.png'))) {
-        $subscriptionQrPath = asset('uploads/admin/subscription_qr.png');
+    if (file_exists(base_path('storage/uploads/admin/subscription_qr.png'))) {
+        $subscriptionQrPath = asset('view-upload/admin/subscription_qr.png');
     }
     $transactions = $transactions ?? collect();
 @endphp
@@ -152,3 +152,4 @@
     </div>
 </div>
 @endsection
+

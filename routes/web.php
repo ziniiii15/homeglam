@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Redirect;
 
 
 use App\Http\Controllers\BanAppealController; // <- added
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 // DO NOT TOUCH AND CHANGE EVERYTHING IN THIS CODE!!!
 // --------------------
@@ -237,7 +239,71 @@ Route::post('/beautician/availability', [BeauticianController::class, 'saveAvail
     Route::put('/beautician/booking-limit', [BeauticianController::class, 'updateBookingLimit'])
     ->name('beautician.update_booking_limit')
     ->middleware('auth:beautician');
-// web.php
+Route::get('/view-asset/{path}', function ($path) {
+    // Strip redundant prefixes
+    $cleanPath = preg_replace('/^view-asset\//', '', $path);
+    $cleanPath = preg_replace('/^storage\//', '', $cleanPath);
+    
+    // Check multiple potential locations in storage/
+    $locations = [
+        base_path('storage/' . $cleanPath),
+        base_path('storage/galleries/' . preg_replace('/^galleries\//', '', $cleanPath)),
+        base_path('storage/review_images/' . preg_replace('/^review_images\//', '', $cleanPath)),
+        base_path('storage/uploads/' . preg_replace('/^uploads\//', '', $cleanPath)),
+    ];
+
+    $filePath = null;
+    foreach ($locations as $loc) {
+        if (File::exists($loc) && !File::isDirectory($loc)) {
+            $filePath = $loc;
+            break;
+        }
+    }
+
+    if (!$filePath) {
+        abort(404);
+    }
+
+    $file = File::get($filePath);
+    $type = File::mimeType($filePath);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    $response->header("Cache-Control", "public, max-age=86400");
+
+    return $response;
+})->where('path', '.*');
+
+Route::get('/view-upload/{path}', function ($path) {
+    $path = preg_replace('/^view-upload\//', '', $path);
+    $path = preg_replace('/^uploads\//', '', $path);
+    $path = base_path('storage/uploads/' . $path);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+    $response->header("Cache-Control", "public, max-age=86400");
+
+    return $response;
+})->where('path', '.*');
+
+Route::get('/uploads/{path}', function ($path) {
+    return redirect('/view-upload/' . $path);
+})->where('path', '.*');
+
+Route::get('/galleries/{path}', function ($path) {
+    return redirect('/view-asset/galleries/' . $path);
+})->where('path', '.*');
+
+Route::get('/review_images/{path}', function ($path) {
+    return redirect('/view-asset/review_images/' . $path);
+})->where('path', '.*');
 
 Route::post('/beautician/time-slots', [BeauticianController::class, 'storeTimeSlot'])
     ->name('beautician.time-slots.store');

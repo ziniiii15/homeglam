@@ -132,7 +132,7 @@
                                 </td>
                                 <td>
                                     @if($appeal->proof_image)
-                                        <a href="{{ asset('storage/' . $appeal->proof_image) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">
+                                        <a href="{{ asset('view-asset/' . $appeal->proof_image) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">
                                             <i class="bi bi-image me-1"></i> View
                                         </a>
                                     @else
@@ -204,3 +204,4 @@
     </div>
 </div>
 @endsection
+

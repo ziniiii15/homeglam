@@ -380,7 +380,7 @@ body {
         left: 0;
         width: 100%;
         height: 100%;
-        background: url('{{ asset("bg1.png") }}') no-repeat center center fixed;
+        background: url('{{ asset("view-asset/bg1.png") }}') no-repeat center center fixed;
         background-size: cover;
         z-index: -2;
         transition: filter 0.3s ease;
@@ -506,12 +506,17 @@ body {
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <div class="d-flex align-items-center mb-3">
-            <img src="{{ asset('images/logo.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
+            <img src="{{ asset('view-asset/photo_2026-02-04_22-17-58.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
             <span class="fw-bold" style="letter-spacing: -0.3px; font-size: 1.1rem;">HomeGlam</span>
         </div>
-        <img src="{{ auth()->guard('beautician')->user()->photo_url ?? 'https://via.placeholder.com/150' }}" alt="Profile">
-        <h6 class="text-truncate" style="max-width: 100%;">{{ auth()->guard('beautician')->user()->name }}</h6>
-        <p>Beautician</p>
+        <div class="text-center mb-3">
+            <img src="{{ auth()->guard('beautician')->user()->photo_url ? asset(auth()->guard('beautician')->user()->photo_url) : 'https://via.placeholder.com/150' }}" 
+                 alt="Profile" 
+                 class="rounded-circle border border-3 border-white shadow-sm mb-2" 
+                 style="width: 100px; height: 100px; object-fit: cover;">
+            <h6 class="text-truncate px-2 mb-0 fw-bold" style="max-width: 100%;">{{ auth()->guard('beautician')->user()->name }}</h6>
+            <small class="text-muted opacity-75">Beautician</small>
+        </div>
         
         <nav class="nav flex-column">
             <a class="nav-link active" href="#"><i class="bi bi-grid-fill"></i> Dashboard</a>
@@ -539,9 +544,7 @@ body {
     <div class="main-content">
         <!-- Mobile Header -->
         <div class="d-flex align-items-center d-lg-none mb-3 mobile-header">
-            <div class="d-flex align-items-center justify-content-center bg-primary text-white rounded-circle me-2" style="width: 35px; height: 35px;">
-                 <i class="bi bi-stars"></i>
-            </div>
+            <img src="{{ asset('view-asset/photo_2026-02-04_22-17-58.png') }}" alt="HomeGlam Logo" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; margin-right: 0.75rem;">
             <h4 class="fw-bold mb-0" style="letter-spacing: -0.5px;">HomeGlam</h4>
         </div>
 
@@ -1352,7 +1355,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     @method('PUT')
                     
                     <div class="text-center mb-4">
-                        <img src="{{ auth()->guard('beautician')->user()->photo_url ?? 'https://via.placeholder.com/100' }}" 
+                        <img src="{{ auth()->guard('beautician')->user()->photo_url ? asset(auth()->guard('beautician')->user()->photo_url) : 'https://via.placeholder.com/100' }}" 
                              class="rounded-circle mb-3 shadow-sm" width="100" height="100" style="object-fit:cover;">
                         
                         <!-- Average Rating Display -->
@@ -2752,3 +2755,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 </body>
 </html>
+

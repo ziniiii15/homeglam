@@ -64,7 +64,7 @@ class AdminController extends Controller
 
     public function verifyBeautician(Beautician $beautician)
     {
-        $directory = public_path('uploads/subscription_proofs');
+        $directory = base_path('storage/uploads/subscription_proofs');
         $pattern = $directory . DIRECTORY_SEPARATOR . 'beautician_' . $beautician->id . '.*';
         $files = glob($pattern);
 
@@ -200,7 +200,7 @@ class AdminController extends Controller
         ]);
 
         if ($request->hasFile('subscription_qr')) {
-            $directory = public_path('uploads/admin');
+            $directory = base_path('storage/uploads/admin');
 
             if (!is_dir($directory)) {
                 mkdir($directory, 0755, true);
@@ -213,3 +213,4 @@ class AdminController extends Controller
         return back()->with('success', 'Subscription QR updated successfully.');
     }
 }
+

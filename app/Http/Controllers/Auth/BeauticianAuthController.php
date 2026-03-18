@@ -246,7 +246,7 @@ class BeauticianAuthController extends Controller
             $hasSubscriptionProof = false;
 
             if ($beautician) {
-                $directory = public_path('uploads/subscription_proofs');
+                $directory = base_path('storage/uploads/subscription_proofs');
                 $pattern = $directory . DIRECTORY_SEPARATOR . 'beautician_' . $beautician->id . '.*';
                 $files = glob($pattern);
                 if ($files && count($files) > 0) {
@@ -302,10 +302,14 @@ class BeauticianAuthController extends Controller
 
         $documentPath = null;
         if ($request->hasFile('verification_document')) {
+             $directory = base_path('storage/uploads/verification_documents');
+             if (!is_dir($directory)) {
+                 mkdir($directory, 0755, true);
+             }
              $file = $request->file('verification_document');
              $filename = time() . '_' . $file->getClientOriginalName();
-             $file->move(public_path('uploads/verification_documents'), $filename);
-             $documentPath = 'uploads/verification_documents/' . $filename;
+             $file->move($directory, $filename);
+             $documentPath = 'view-upload/verification_documents/' . $filename;
         }
 
         $beautician = Beautician::create([
@@ -337,3 +341,4 @@ class BeauticianAuthController extends Controller
         return app('redirect')->route('welcome');
     }
 }
+

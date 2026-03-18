@@ -61,3 +61,4 @@ class GalleryController extends Controller
         return redirect()->route('galleries.index')->with('success','Gallery image deleted successfully.');
     }
 }
+
