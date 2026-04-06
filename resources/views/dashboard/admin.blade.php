@@ -463,7 +463,7 @@
                             @forelse($categories as $category)
                             <tr>
                                 <td class="ps-3">
-                                    <div class="avatar-circle bg-dark text-white border-pink shadow-sm" style="width: 35px; height: 35px; font-size: 0.9rem;">
+                                    <div class="avatar-circle bg-gradient-pink text-white border-pink shadow-sm" style="width: 35px; height: 35px; font-size: 0.9rem;">
                                         <i class="bi bi-{{ $category->icon }}"></i>
                                     </div>
                                 </td>
@@ -654,7 +654,7 @@
                                         <td class="ps-3">
                                             <a href="{{ route('clients.show', $client->id) }}" class="text-decoration-none group-hover">
                                                 <div class="d-flex align-items-center">
-                                                    <div class="avatar-circle me-3 bg-dark text-primary-pink border border-light border-opacity-25">
+                                                    <div class="avatar-circle me-3 bg-gradient-pink text-primary-pink border border-light border-opacity-25">
                                                         {{ substr($client->name, 0, 1) }}
                                                     </div>
                                                     <div>
@@ -709,7 +709,7 @@
                                         <td class="ps-3">
                                             <a href="{{ route('beauticians.show', $beautician->id) }}" class="text-decoration-none">
                                                 <div class="d-flex align-items-center">
-                                                    <div class="avatar-circle me-3 bg-dark text-primary-pink border border-light border-opacity-25">
+                                                    <div class="avatar-circle me-3 bg-gradient-pink text-primary-pink border border-light border-opacity-25">
                                                         {{ substr($beautician->name, 0, 1) }}
                                                     </div>
                                                     <div>

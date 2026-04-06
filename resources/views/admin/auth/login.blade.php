@@ -16,9 +16,9 @@
                         <p class="text-muted small">Enter your password to access the dashboard</p>
                     </div>
 
-                    @if(session('error'))
+                    @if($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-                            <i class="bi bi-exclamation-circle-fill me-2"></i> {{ session('error') }}
+                            <i class="bi bi-exclamation-circle-fill me-2"></i> {{ $errors->first() }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif

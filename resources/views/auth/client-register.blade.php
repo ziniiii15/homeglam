@@ -3,281 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Register</title>
+    <title>Client Register | HomeGlam</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
         :root {
             --primary: #D63384;
-            --primary-light: #ff85c0;
-            --accent: #FFA6C9;
-            --text-light: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --primary-soft: #ffe5f0;
+            --bg-pink: #FFF5F7;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --radius: 24px;
         }
 
         body, html {
             height: 100%;
             margin: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-pink);
             overflow-x: hidden;
         }
 
-        /* Background */
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('{{ asset("view-asset/bg1.png") }}') no-repeat center center;
-            background-size: cover;
-            z-index: -2;
-            transform: scale(1.05);
-            animation: slowZoom 20s infinite alternate;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20, 5, 10, 0.7) 50%, rgba(50, 10, 30, 0.6) 100%);
-            z-index: -1;
-        }
-
-        /* Container */
-        .auth-container {
+        .auth-wrapper {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 3rem 1rem;
-            position: relative;
-            z-index: 1;
+            background: radial-gradient(circle at top right, #ffe5f0, #ffffff 60%);
         }
 
-        /* Glass Card */
         .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(214, 51, 132, 0.1);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
             padding: 3rem;
             width: 100%;
-            max-width: 550px; /* Wider for register form */
-            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            max-width: 600px;
+            animation: fadeInUp 0.6s ease-out forwards;
         }
 
-        /* Form Elements */
-        h3 {
-            color: white;
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+        .brand-logo {
             text-align: center;
-            letter-spacing: -0.5px;
+            margin-bottom: 2rem;
+        }
+        .brand-logo a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .brand-logo i {
+            color: var(--primary);
+            font-size: 2.2rem;
         }
 
-        .form-label {
-            color: var(--text-muted);
-            font-weight: 500;
+        h3 {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2.5rem;
             font-size: 0.95rem;
         }
 
+        .form-label {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: 1.5px solid #eee;
+            border-right: none;
+            color: var(--text-muted);
+            border-radius: 14px 0 0 14px;
+        }
+
         .form-control {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 12px;
+            background: transparent;
+            border: 1.5px solid #eee;
+            border-left: none;
+            color: var(--text-dark);
+            padding: 12px 16px 12px 0;
+            border-radius: 0 14px 14px 0;
             font-size: 1rem;
             transition: all 0.3s ease;
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.15);
-            color: white;
-            outline: none;
+            background: transparent;
+            border-color: var(--primary);
+            box-shadow: none;
+            color: var(--text-dark);
+        }
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+        /* For inputs without groups */
+        .form-control-simple {
+            border-left: 1.5px solid #eee;
+            border-radius: 14px;
+            padding-left: 16px;
         }
 
-        /* Button */
         .btn-submit {
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 14px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             width: 100%;
             margin-top: 1.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.2);
         }
 
         .btn-submit:hover {
-            background: #c0206d;
+            background: #b02a6c;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(214, 51, 132, 0.5);
+            box-shadow: 0 8px 25px rgba(214, 51, 132, 0.3);
             color: white;
         }
 
-        /* Links */
         .auth-link {
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             color: var(--text-muted);
             font-size: 0.95rem;
         }
 
         .auth-link a {
-            color: var(--accent);
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            transition: all 0.2s ease;
         }
 
         .auth-link a:hover {
-            color: var(--primary-light);
             text-decoration: underline;
         }
 
-        /* Animations */
-        @keyframes slowZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+        .section-divider {
+            border-top: 1px solid #eee;
+            margin: 2rem 0;
+            position: relative;
+        }
+        .section-divider span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg);
+            padding: 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 576px) {
-            .glass-card {
-                padding: 2rem;
-            }
-            h3 {
-                font-size: 1.75rem;
-            }
+            .glass-card { padding: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-image"></div>
-    <div class="bg-overlay"></div>
-
-    <div class="auth-container">
+    <div class="auth-wrapper">
         <div class="glass-card">
-            <h3>Client Register</h3>
+            <div class="brand-logo">
+                <a href="{{ route('welcome') }}">
+                    <i class="bi bi-gem"></i> HomeGlam
+                </a>
+            </div>
+            
+            <h3>Client Registration</h3>
+            <p class="subtitle">Join us and experience premium beauty at home.</p>
 
             <form method="POST" action="{{ route('client.register') }}">
                 @csrf
 
-                <div class="mb-3">
-                    <label class="form-label">Name</label>
-                    <input type="text" name="name" class="form-control" required>
-                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" name="name" class="form-control" required placeholder="John Doe">
+                        </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Phone</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-secondary text-white border-secondary">+63</span>
-                        <input type="text" name="phone_number" class="form-control" placeholder="9xxxxxxxxx" maxlength="10" pattern="[9][0-9]{9}" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length > 10) this.value = this.value.slice(0, 10);">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" name="email" class="form-control" required placeholder="name@example.com">
+                        </div>
                     </div>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text" style="border-right: 1.5px solid #eee; border-radius: 14px 0 0 14px;">+63</span>
+                        <input type="text" name="phone_number" class="form-control" placeholder="9xxxxxxxxx" maxlength="10" pattern="[9][0-9]{9}" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value.length > 10) this.value = this.value.slice(0, 10);" style="border-left: none;">
+                    </div>
+                </div>
+
+                <div class="section-divider"><span>Address Details</span></div>
 
                 <input type="hidden" name="address" id="fullAddress">
-                <div class="mb-3">
-                    <label class="form-label">Address Details</label>
-                    <div class="row g-2">
-                        <div class="col-12">
-                            <input type="text" id="addrRegion" class="form-control mb-2" placeholder="Region" required>
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <input type="text" id="addrRegion" class="form-control form-control-simple mb-2" placeholder="Region" required>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="addrProvince" class="form-control form-control-simple mb-2" placeholder="Province" required>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="addrCity" class="form-control form-control-simple mb-2" placeholder="City / Municipality" required>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="addrBarangay" class="form-control form-control-simple mb-2" placeholder="Barangay" required>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" id="addrPostal" class="form-control form-control-simple mb-2" placeholder="Postal Code" required>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" id="addrStreet" class="form-control form-control-simple mb-2" placeholder="Street Name" required>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" id="addrHouse" class="form-control form-control-simple" placeholder="House Number / Building" required>
+                    </div>
+                </div>
+
+                <div class="section-divider"><span>Security</span></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" class="form-control" required placeholder="••••••••">
                         </div>
-                        <div class="col-12">
-                            <input type="text" id="addrProvince" class="form-control mb-2" placeholder="Province" required>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" id="addrCity" class="form-control mb-2" placeholder="City / Municipality" required>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" id="addrBarangay" class="form-control mb-2" placeholder="Barangay" required>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" id="addrPostal" class="form-control mb-2" placeholder="Postal Code" required>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" id="addrStreet" class="form-control mb-2" placeholder="Street Name" required>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" id="addrHouse" class="form-control" placeholder="House Number" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock-check"></i></span>
+                            <input type="password" name="password_confirmation" class="form-control" required placeholder="••••••••">
                         </div>
                     </div>
                 </div>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const updateAddress = () => {
-                            const region = document.getElementById('addrRegion').value || '';
-                            const province = document.getElementById('addrProvince').value || '';
-                            const city = document.getElementById('addrCity').value || '';
-                            const barangay = document.getElementById('addrBarangay').value || '';
-                            const postal = document.getElementById('addrPostal').value || '';
-                            const street = document.getElementById('addrStreet').value || '';
-                            const house = document.getElementById('addrHouse').value || '';
-                            
-                            // Format: Region, Province, City, Barangay, Postal Code, Street Name, House Number
-                            // Only add commas if values exist to avoid ", , , "
-                            const parts = [region, province, city, barangay, postal, street, house];
-                            // The requirement says "regio, province,city,barangay, postal code, street name, and house number"
-                            // So we should just join them.
-                            const fullAddr = parts.join(', ');
-                            document.getElementById('fullAddress').value = fullAddr;
-                        };
-
-                        ['addrRegion', 'addrProvince', 'addrCity', 'addrBarangay', 'addrPostal', 'addrStreet', 'addrHouse'].forEach(id => {
-                            const el = document.getElementById(id);
-                            if(el) el.addEventListener('input', updateAddress);
-                        });
-                    });
-                </script>
-
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="form-control" required>
-                </div>
-
-                <button type="submit" class="btn-submit">Register</button>
+                <button type="submit" class="btn-submit">Create Account</button>
             </form>
 
             <div class="auth-link">
@@ -285,6 +289,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateAddress = () => {
+                const region = document.getElementById('addrRegion').value || '';
+                const province = document.getElementById('addrProvince').value || '';
+                const city = document.getElementById('addrCity').value || '';
+                const barangay = document.getElementById('addrBarangay').value || '';
+                const postal = document.getElementById('addrPostal').value || '';
+                const street = document.getElementById('addrStreet').value || '';
+                const house = document.getElementById('addrHouse').value || '';
+                
+                const parts = [region, province, city, barangay, postal, street, house];
+                const fullAddr = parts.filter(p => p !== '').join(', ');
+                document.getElementById('fullAddress').value = fullAddr;
+            };
+
+            ['addrRegion', 'addrProvince', 'addrCity', 'addrBarangay', 'addrPostal', 'addrStreet', 'addrHouse'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.addEventListener('input', updateAddress);
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -131,7 +131,7 @@ class AdminController extends Controller
             'role' => $request->role,
         ]);
         
-        return redirect()->back()->with('success','Admin created successfully.');
+        return redirect()->route('admins.index')->with('success','Admin created successfully.');
     }
 
     public function show(Admin $admin)

@@ -30,17 +30,19 @@
 
     /* Navbar */
     .navbar {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(214, 51, 132, 0.1);
+        background: transparent !important;
+        backdrop-filter: none !important;
         padding: 1rem 0;
         transition: all 0.3s;
     }
     .navbar-brand {
         font-weight: 800;
-        color: var(--primary) !important;
+        color: var(--text-dark) !important;
         font-size: 1.6rem;
         letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
     .nav-link {
         font-weight: 600;
@@ -199,7 +201,7 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-            <i class="bi bi-gem"></i> HomeGlam
+            <img src="{{ asset('view-asset/photo_2026-02-04_22-17-58.png') }}" alt="HomeGlam Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"> HomeGlam
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>

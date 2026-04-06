@@ -3,205 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beautician Login</title>
+    <title>Beautician Login | HomeGlam</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
         :root {
             --primary: #D63384;
-            --primary-light: #ff85c0;
-            --accent: #FFA6C9;
-            --text-light: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --primary-soft: #ffe5f0;
+            --bg-pink: #FFF5F7;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --radius: 24px;
         }
 
         body, html {
             height: 100%;
             margin: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-pink);
             overflow-x: hidden;
         }
 
-        /* Background */
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('{{ asset("view-asset/bg1.png") }}') no-repeat center center;
-            background-size: cover;
-            z-index: -2;
-            transform: scale(1.05);
-            animation: slowZoom 20s infinite alternate;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20, 5, 10, 0.7) 50%, rgba(50, 10, 30, 0.6) 100%);
-            z-index: -1;
-        }
-
-        /* Container */
-        .auth-container {
+        .auth-wrapper {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem 1rem;
-            position: relative;
-            z-index: 1;
+            background: radial-gradient(circle at top right, #ffe5f0, #ffffff 60%);
         }
 
-        /* Glass Card */
         .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--glass-shadow);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(214, 51, 132, 0.1);
+            border-radius: var(--radius);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
             padding: 3rem;
             width: 100%;
-            max-width: 420px;
-            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            max-width: 440px;
+            animation: fadeInUp 0.6s ease-out forwards;
         }
 
-        /* Form Elements */
-        h3 {
-            color: white;
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+        .brand-logo {
             text-align: center;
-            letter-spacing: -0.5px;
+            margin-bottom: 2rem;
+        }
+        .brand-logo a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .brand-logo i {
+            color: var(--primary);
+            font-size: 2.2rem;
         }
 
-        .form-label {
-            color: var(--text-muted);
-            font-weight: 500;
+        h3 {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2.5rem;
             font-size: 0.95rem;
         }
 
+        .form-label {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: 1.5px solid #eee;
+            border-right: none;
+            color: var(--text-muted);
+            border-radius: 14px 0 0 14px;
+        }
+
         .form-control {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 12px;
+            background: transparent;
+            border: 1.5px solid #eee;
+            border-left: none;
+            color: var(--text-dark);
+            padding: 12px 16px 12px 0;
+            border-radius: 0 14px 14px 0;
             font-size: 1rem;
             transition: all 0.3s ease;
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.15);
-            color: white;
-            outline: none;
+            background: transparent;
+            border-color: var(--primary);
+            box-shadow: none;
+            color: var(--text-dark);
+        }
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary);
+            color: var(--primary);
         }
 
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Button */
         .btn-submit {
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 14px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             width: 100%;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.2);
         }
 
         .btn-submit:hover {
-            background: #c0206d;
+            background: #b02a6c;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(214, 51, 132, 0.5);
+            box-shadow: 0 8px 25px rgba(214, 51, 132, 0.3);
             color: white;
         }
 
-        /* Links */
         .auth-link {
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             color: var(--text-muted);
             font-size: 0.95rem;
         }
 
         .auth-link a {
-            color: var(--accent);
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            transition: all 0.2s ease;
         }
 
         .auth-link a:hover {
-            color: var(--primary-light);
             text-decoration: underline;
         }
 
-        /* Animations */
-        @keyframes slowZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 576px) {
-            .glass-card {
-                padding: 2rem;
-            }
-            h3 {
-                font-size: 1.75rem;
-            }
+            .glass-card { padding: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-image"></div>
-    <div class="bg-overlay"></div>
-
-    <div class="auth-container">
+    <div class="auth-wrapper">
         <div class="glass-card">
+            <div class="brand-logo">
+                <a href="{{ route('welcome') }}">
+                    <i class="bi bi-gem"></i> HomeGlam
+                </a>
+            </div>
+            
             <h3>Beautician Login</h3>
+            <p class="subtitle">Access your professional dashboard.</p>
 
             <form method="POST" action="{{ route('beautician.login') }}">
                 @csrf
 
                 <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" required placeholder="name@example.com">
+                    <label class="form-label">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" name="email" class="form-control" required placeholder="Enter your email">
+                    </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-4">
                     <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required placeholder="••••••••">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" name="password" class="form-control" required placeholder="••••••••">
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-submit">Login</button>
@@ -225,4 +220,3 @@
 
 </body>
 </html>
-
