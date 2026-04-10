@@ -207,10 +207,13 @@ class AdminController extends Controller
             }
 
             $file = $request->file('subscription_qr');
+            $targetPath = $directory . DIRECTORY_SEPARATOR . 'subscription_qr.png';
+            if (is_file($targetPath)) {
+                @unlink($targetPath);
+            }
             $file->move($directory, 'subscription_qr.png');
         }
 
         return back()->with('success', 'Subscription QR updated successfully.');
     }
 }
-
