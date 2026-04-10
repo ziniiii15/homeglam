@@ -21,9 +21,7 @@ class AdminController extends Controller
         $admins = Admin::all(); // Add admins for list
         $pendingAppealsCount = BanAppeal::where('status', 'pending')->count(); // Add count for dashboard
         
-        $pendingVerifications = Beautician::where('is_verified', false)
-            ->whereNull('rejection_reason')
-            ->get();
+        $pendingVerifications = Beautician::where('is_verified', false)->get();
         $pendingVerificationsCount = $pendingVerifications->count();
 
         $categories = Category::all();
@@ -77,47 +75,8 @@ class AdminController extends Controller
         $beautician->update([
             'is_verified' => true,
             'subscription_expires_at' => now()->addMonth(),
-            'rejection_reason' => null,
-            'verification_status' => 'verified',
-            'rejected_at' => null,
         ]);
         return back()->with('success', 'Beautician verified successfully.');
-    }
-
-    public function denyBeauticianVerification(Beautician $beautician)
-    {
-        if ($beautician->verification_document) {
-            $relative = $beautician->verification_document;
-            if (str_starts_with($relative, 'view-upload/')) {
-                $relative = substr($relative, strlen('view-upload/'));
-            }
-            $filePath = base_path('storage/uploads/' . ltrim($relative, '\\/'));
-            if (is_file($filePath)) {
-                @unlink($filePath);
-            }
-        }
-
-        $directory = base_path('storage/uploads/subscription_proofs');
-        $pattern = $directory . DIRECTORY_SEPARATOR . 'beautician_' . $beautician->id . '.*';
-        $files = glob($pattern);
-        if ($files && count($files) > 0) {
-            foreach ($files as $file) {
-                if (is_file($file)) {
-                    @unlink($file);
-                }
-            }
-        }
-
-        $beautician->update([
-            'is_verified' => false,
-            'verification_document' => null,
-            'subscription_expires_at' => null,
-            'rejection_reason' => 'Verification denied.',
-            'verification_status' => 'denied',
-            'rejected_at' => now(),
-        ]);
-
-        return back()->with('success', 'Beautician verification denied.');
     }
 
     public function indexAppeals()
@@ -248,13 +207,10 @@ class AdminController extends Controller
             }
 
             $file = $request->file('subscription_qr');
-            $targetPath = $directory . DIRECTORY_SEPARATOR . 'subscription_qr.png';
-            if (is_file($targetPath)) {
-                @unlink($targetPath);
-            }
             $file->move($directory, 'subscription_qr.png');
         }
 
         return back()->with('success', 'Subscription QR updated successfully.');
     }
 }
+

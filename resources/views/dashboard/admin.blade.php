@@ -418,16 +418,10 @@
                                 </td>
                                 <td class="text-muted">{{ $b->created_at->format('M d, Y') }}</td>
                                 <td class="text-end pe-3">
-                                    <div class="d-inline-flex flex-wrap gap-2 justify-content-end">
-                                        <form action="{{ route('admin.beauticians.verify', $b->id) }}" method="POST" class="d-inline">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">Verify</button>
-                                        </form>
-                                        <form action="{{ route('admin.beauticians.deny', $b->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Deny this beautician verification?');">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">Deny</button>
-                                        </form>
-                                    </div>
+                                    <form action="{{ route('admin.beauticians.verify', $b->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-success rounded-pill px-3">Verify</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
@@ -567,9 +561,8 @@
                         <h6 class="fw-bold text-dark mb-3">Subscription QR</h6>
                         @php
                             $subscriptionQrPath = null;
-                            $subscriptionQrFilePath = base_path('storage/uploads/admin/subscription_qr.png');
-                            if (file_exists($subscriptionQrFilePath)) {
-                                $subscriptionQrPath = asset('view-upload/admin/subscription_qr.png') . '?v=' . filemtime($subscriptionQrFilePath);
+                            if (file_exists(base_path('storage/uploads/admin/subscription_qr.png'))) {
+                                $subscriptionQrPath = asset('view-upload/admin/subscription_qr.png');
                             }
                         @endphp
 

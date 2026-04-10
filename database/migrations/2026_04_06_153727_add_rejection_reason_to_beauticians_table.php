@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('beauticians', function (Blueprint $table) {
-            $table->text('rejection_reason')->nullable()->after('is_verified');
-            $table->timestamp('verification_denied_at')->nullable()->after('rejection_reason');
+            //
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('beauticians', function (Blueprint $table) {
-            $table->dropColumn(['rejection_reason', 'verification_denied_at']);
+            //
         });
     }
 };

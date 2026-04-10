@@ -171,10 +171,6 @@ class BeauticianController extends Controller
             $subscriptionExpired = false;
         }
 
-        if ($beautician && ($beautician->rejection_reason || $beautician->verification_status === 'denied')) {
-            return redirect()->route('beautician.denied');
-        }
-
         if (!$beautician || (!$beautician->is_verified && !$subscriptionExpired)) {
             return redirect()->route('beautician.pending');
         }
@@ -814,3 +810,4 @@ public function storeTimeSlot(Request $request)
     }
 
 }
+

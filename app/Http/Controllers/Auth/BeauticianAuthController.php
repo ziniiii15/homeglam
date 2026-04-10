@@ -261,9 +261,6 @@ class BeauticianAuthController extends Controller
                     $beautician->is_verified = false;
                 }
             }
-            if ($beautician && ($beautician->rejection_reason || $beautician->verification_status === 'denied')) {
-                return app('redirect')->route('beautician.denied');
-            }
             if (!$beautician->is_verified && (!$expired || $hasSubscriptionProof)) {
                 return app('redirect')->route('beautician.pending');
             }
