@@ -74,6 +74,7 @@ Route::prefix('admin')->group(function () {
 
         // Verify Beautician
         Route::post('beauticians/{beautician}/verify', [AdminController::class, 'verifyBeautician'])->name('admin.beauticians.verify');
+        Route::post('beauticians/{beautician}/deny', [AdminController::class, 'denyBeauticianVerification'])->name('admin.beauticians.deny');
         Route::post('beauticians/{beautician}/test-subscription', [AdminController::class, 'testBeauticianSubscription'])->name('admin.beauticians.test_subscription');
 
         // Category Management
@@ -161,11 +162,26 @@ Route::prefix('beautician')->group(function () {
         
         // Pending Verification
         Route::get('pending', function () {
-            if (auth()->guard('beautician')->user()->is_verified) {
+            $beautician = auth()->guard('beautician')->user();
+            if ($beautician->is_verified) {
                 return redirect()->route('beautician.dashboard');
+            }
+            if ($beautician->rejection_reason || $beautician->verification_status === 'denied') {
+                return redirect()->route('beautician.denied');
             }
             return view('auth.pending');
         })->name('beautician.pending');
+
+        Route::get('denied', function () {
+            $beautician = auth()->guard('beautician')->user();
+            if ($beautician->is_verified) {
+                return redirect()->route('beautician.dashboard');
+            }
+            if (!$beautician->rejection_reason && $beautician->verification_status !== 'denied') {
+                return redirect()->route('beautician.pending');
+            }
+            return view('auth.denied');
+        })->name('beautician.denied');
 
         Route::get('subscription/renew', function () {
             $beautician = auth()->guard('beautician')->user();

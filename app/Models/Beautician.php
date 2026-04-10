@@ -23,6 +23,9 @@ class Beautician extends Authenticatable
         'banned_until',
         'verification_document',
         'is_verified',
+        'verification_status',
+        'rejection_reason',
+        'rejected_at',
         'subscription_expires_at',
         'qr_code_path',
     ];
@@ -36,6 +39,7 @@ class Beautician extends Authenticatable
         'email_verified_at' => 'datetime',
         'banned_until' => 'datetime',
         'subscription_expires_at' => 'datetime',
+        'rejected_at' => 'datetime',
     ];
 
     // Relationships
