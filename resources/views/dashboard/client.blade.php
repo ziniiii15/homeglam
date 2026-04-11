@@ -1844,7 +1844,7 @@ function openBookingDetailsModal(data) {
     if (cancelForm) {
         if (data.status.toLowerCase() === 'pending') {
             cancelForm.classList.remove('d-none');
-            cancelForm.action = "{{ url('bookings') }}/" + data.id + "/cancel"; 
+            cancelForm.action = "{{ url('client/bookings') }}/" + data.id + "/cancel"; 
         } else {
             cancelForm.classList.add('d-none');
         }
